@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect to your \u00d6kofen Pellematic",
+        "title": "Connect to your Ökofen Pellematic",
         "description": "Enter the JSON API URL (e.g., {example_url}). The system will automatically discover your configuration.\n\n{charset_warning}",
         "data": {
           "host": "JSON API URL (including password)",
@@ -33,13 +33,184 @@
     }
   },
   "entity": {
-	"select": {
+    "sensor": {
+      "system_ambient_temperature": {
+        "name": "Ambient temperature"
+      },
+      "system_errors": {
+        "name": "Errors"
+      },
+      "system_usb_stick": {
+        "name": "USB stick"
+      },
+      "system_boiler_temperature": {
+        "name": "Boiler temperature"
+      },
+      "system_existing_boiler": {
+        "name": "Existing boiler"
+      },
+      "system_mode": {
+        "name": "System mode"
+      },
+      "weather_outside_temperature": {
+        "name": "Outside temperature"
+      },
+      "weather_cloudiness": {
+        "name": "Cloudiness"
+      },
+      "weather_forecast_temperature": {
+        "name": "Forecast temperature"
+      },
+      "weather_forecast_cloudiness": {
+        "name": "Forecast cloudiness"
+      },
+      "weather_forecast_today": {
+        "name": "Today's forecast"
+      },
+      "weather_start_time": {
+        "name": "Start time"
+      },
+      "weather_end_time": {
+        "name": "End time"
+      },
+      "weather_source": {
+        "name": "Weather source"
+      },
+      "weather_location": {
+        "name": "Weather location"
+      },
+      "weather_cloud_limit": {
+        "name": "Cloud limit"
+      },
+      "weather_hysteresis": {
+        "name": "Hysteresis"
+      },
+      "weather_off_temperature": {
+        "name": "Off temperature"
+      },
+      "weather_lead_time": {
+        "name": "Lead time"
+      },
+      "weather_refresh": {
+        "name": "Refresh"
+      },
+      "weather_eco_mode": {
+        "name": "Eco mode"
+      },
+      "hot_water_target_temperature": {
+        "name": "Hot water {index} target temperature"
+      },
+      "hot_water_on_temperature": {
+        "name": "Hot water {index} on temperature"
+      },
+      "hot_water_off_temperature": {
+        "name": "Hot water {index} off temperature"
+      },
+      "hot_water_pump": {
+        "name": "Hot water {index} pump"
+      },
+      "hot_water_state": {
+        "name": "Hot water {index} state"
+      },
+      "hot_water_status": {
+        "name": "Hot water {index} status"
+      },
+      "hot_water_time_program": {
+        "name": "Hot water {index} time program"
+      },
+      "hot_water_sensor_on": {
+        "name": "Hot water {index} on sensor"
+      },
+      "hot_water_sensor_off": {
+        "name": "Hot water {index} off sensor"
+      },
+      "hot_water_mode": {
+        "name": "Hot water {index} mode"
+      },
+      "hot_water_heat_once": {
+        "name": "Hot water {index} heat once"
+      },
+      "hot_water_min_temperature": {
+        "name": "Hot water {index} minimum temperature"
+      },
+      "hot_water_max_temperature": {
+        "name": "Hot water {index} maximum temperature"
+      },
+      "hot_water_smart_start": {
+        "name": "Hot water {index} smart start"
+      },
+      "hot_water_use_boiler_heat": {
+        "name": "Hot water {index} use boiler heat"
+      },
+      "hot_water_eco_mode": {
+        "name": "Hot water {index} eco mode"
+      },
+      "solar_collector_temperature": {
+        "name": "Solar {index} collector temperature"
+      },
+      "solar_storage_temperature": {
+        "name": "Solar {index} storage temperature"
+      },
+      "solar_pump": {
+        "name": "Solar {index} pump"
+      },
+      "solar_state": {
+        "name": "Solar {index} state"
+      },
+      "solar_status": {
+        "name": "Solar {index} status"
+      },
+      "solar_mode": {
+        "name": "Solar {index} mode"
+      },
+      "solar_cooling": {
+        "name": "Solar {index} cooling"
+      },
+      "solar_storage_max_temperature": {
+        "name": "Solar {index} maximum storage temperature"
+      }
+    },
+    "binary_sensor": {
+      "hot_water_pump": {
+        "name": "Hot water {index} pump"
+      },
+      "solar_pump": {
+        "name": "Solar {index} pump"
+      }
+    },
+    "number": {
+      "weather_cloud_limit": {
+        "name": "Cloud limit"
+      },
+      "weather_hysteresis": {
+        "name": "Hysteresis"
+      },
+      "weather_off_temperature": {
+        "name": "Off temperature"
+      },
+      "weather_lead_time": {
+        "name": "Lead time"
+      },
+      "hot_water_target_temperature": {
+        "name": "Hot water {index} target temperature"
+      },
+      "hot_water_min_temperature": {
+        "name": "Hot water {index} minimum temperature"
+      },
+      "hot_water_max_temperature": {
+        "name": "Hot water {index} maximum temperature"
+      },
+      "solar_storage_max_temperature": {
+        "name": "Solar {index} maximum storage temperature"
+      }
+    },
+    "select": {
       "heater": {
         "state": {
           "0_off": "0 - Stop",
           "1_auto": "1 - Auto",
           "2_comfort": "2 - Comfort",
-		  "3_slow": "3 - Reduced"
+          "3_slow": "3 - Reduced"
         }
       },
       "mode": {
@@ -55,9 +226,30 @@
           "0_off": "0 - Off",
           "1_on": "1 - On"
         }
+      },
+      "hot_water_mode": {
+        "name": "Hot water {index} mode"
+      },
+      "hot_water_heat_once": {
+        "name": "Hot water {index} heat once"
+      },
+      "hot_water_sensor_on": {
+        "name": "Hot water {index} on sensor"
+      },
+      "hot_water_sensor_off": {
+        "name": "Hot water {index} off sensor"
+      },
+      "hot_water_eco_mode": {
+        "name": "Hot water {index} eco mode"
+      },
+      "solar_mode": {
+        "name": "Solar {index} mode"
+      },
+      "solar_cooling": {
+        "name": "Solar {index} cooling"
       }
     },
-	"switch": {
+    "switch": {
       "onoff": {
         "state": {
           "0_off": "0 - Off",
