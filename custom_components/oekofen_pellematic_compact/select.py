@@ -92,18 +92,30 @@ class PellematicSelect(SelectEntity):
         self._hub = hub
         self._prefix = select_definition['component']
         self._key = select_definition['key']
-        self._name = f"{self._platform_name} {select_definition['name']}"
+        translation_key = select_definition.get("translation_key")
+
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        else:
+            self._name = f"{self._platform_name} {select_definition['name']}"
+            
         self._attr_unique_id = f"{self._platform_name.lower()}_{self._prefix}_{self._key}"
         # Use component_key for entity_id instead of long human-readable name
         self._attr_object_id = f"{self._prefix}_{self._key}".lower()
         self._attr_current_option = None
         self._attr_options = select_definition['options']
         self._device_info = device_info
-        self._attr_translation_key = None
+        
         
         _LOGGER.debug(
             "Adding dynamic PellematicSelect: %s, %s, options: %s",
-            self._name,
+            getattr(
+                self,
+                "_name",
+                getattr(self, "_attr_translation_key", None),
+            ),
+            
             self._attr_unique_id,
             self._attr_options,
         )
@@ -173,11 +185,6 @@ class PellematicSelect(SelectEntity):
     def _update_state(self):
         self._attr_current_option = self._update_current_option()
         
-    @property
-    def name(self):
-        """Return the name."""
-        return f"{self._name}"
-
     @property
     def state(self):
         """Return the entity state."""
