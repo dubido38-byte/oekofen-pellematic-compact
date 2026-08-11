@@ -2,37 +2,208 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connecter votre chaudière Ökofen Pellematic",
-        "description": "Entrez l'URL de l'API JSON (ex: {example_url}). Le système découvrira automatiquement votre configuration.\n\n{charset_warning}",
+        "title": "Connexion à votre Ökofen Pellematic",
+        "description": "Saisissez l’URL de l’API JSON (par exemple {example_url}). Le système détectera automatiquement votre configuration.\n\n{charset_warning}",
         "data": {
-          "host": "URL de l'API JSON (mot de passe inclus)",
-          "name": "Nom de l'intégration",
+          "host": "URL de l’API JSON (mot de passe inclus)",
+          "name": "Nom de l’intégration",
           "charset": "Jeu de caractères (iso-8859-1 ou utf-8)",
           "old_firmware": "Mode ancien firmware (environ v3.10)"
         }
       },
       "reconfigure": {
         "title": "Reconfigurer Ökofen Pellematic",
-        "description": "Mettez à jour les paramètres d'intégration. Le nombre de composants est détecté automatiquement, vous n'avez qu'à configurer les paramètres de connexion.\n\nSi vous voyez des caractères corrompus (ü→Ã¼, ö→Ã¶) dans les noms d'entités, essayez de changer le jeu de caractères.\n\n⚠️ Après l'enregistrement, l'intégration sera rechargée et toutes les entités seront indisponibles pendant 1-2 minutes lors de la reconnexion à l'API.\n\n{charset_warning}",
+        "description": "Mettez à jour les paramètres de l’intégration. Le nombre de composants est détecté automatiquement ; seuls les paramètres de connexion doivent être configurés.\n\nSi des caractères incorrects apparaissent (ü→Ã¼, ö→Ã¶) dans les noms des entités, essayez de modifier le jeu de caractères.\n\n⚠️ Après l’enregistrement, l’intégration sera rechargée et toutes les entités seront indisponibles pendant 1 à 2 minutes, le temps de la reconnexion à l’API.\n\n{charset_warning}",
         "data": {
-          "host": "URL de l'API JSON (mot de passe inclus)",
-          "scan_interval": "Fréquence de rafraîchissement (secondes)",
+          "host": "URL de l’API JSON (mot de passe inclus)",
+          "scan_interval": "Intervalle d’interrogation (secondes)",
           "charset": "Jeu de caractères (iso-8859-1 ou utf-8)",
           "old_firmware": "Mode ancien firmware (environ v3.10)"
         }
       }
     },
     "error": {
-      "already_configured": "Appareil déjà configuré",
-      "cannot_connect": "Échec de connexion à l'API. Vérifiez l'URL et le mot de passe. Si l'URL est correcte, l'API Ökofen peut limiter les requêtes - veuillez patienter un moment et réessayer.",
-      "invalid_charset": "Encodage de caractères invalide. Utilisez un codec Python valide (ex: iso-8859-1, utf-8, windows-1252)"
+      "already_configured": "L’appareil est déjà configuré",
+      "cannot_connect": "Impossible de se connecter à l’API. Vérifiez l’URL et le mot de passe. Si l’URL est correcte, l’API Ökofen limite peut-être temporairement le nombre de requêtes ; patientez un instant puis réessayez.",
+      "invalid_charset": "Encodage de caractères non valide. Utilisez un codec Python valide (par exemple iso-8859-1, utf-8 ou windows-1252)"
     },
     "abort": {
-      "already_configured": "Appareil déjà configuré",
-      "reconfiguration_successful": "Configuration mise à jour avec succès. L'intégration se recharge - les entités seront disponibles dans 1-2 minutes."
+      "already_configured": "L’appareil est déjà configuré",
+      "reconfiguration_successful": "Configuration mise à jour avec succès. L’intégration est en cours de rechargement ; les entités seront de nouveau disponibles dans 1 à 2 minutes."
     }
   },
   "entity": {
+    "sensor": {
+      "system_ambient_temperature": {
+        "name": "Température ambiante"
+      },
+      "system_errors": {
+        "name": "Erreurs"
+      },
+      "system_usb_stick": {
+        "name": "Clé USB"
+      },
+      "system_boiler_temperature": {
+        "name": "Température chaudière"
+      },
+      "system_existing_boiler": {
+        "name": "Chaudière existante"
+      },
+      "system_mode": {
+        "name": "Mode système"
+      },
+      "weather_outside_temperature": {
+        "name": "Température extérieure"
+      },
+      "weather_cloudiness": {
+        "name": "Nébulosité"
+      },
+      "weather_forecast_temperature": {
+        "name": "Température prévue"
+      },
+      "weather_forecast_cloudiness": {
+        "name": "Nébulosité prévue"
+      },
+      "weather_forecast_today": {
+        "name": "Prévisions du jour"
+      },
+      "weather_start_time": {
+        "name": "Heure de début"
+      },
+      "weather_end_time": {
+        "name": "Heure de fin"
+      },
+      "weather_source": {
+        "name": "Source météo"
+      },
+      "weather_location": {
+        "name": "Localisation météo"
+      },
+      "weather_cloud_limit": {
+        "name": "Limite de nébulosité"
+      },
+      "weather_hysteresis": {
+        "name": "Hystérésis"
+      },
+      "weather_off_temperature": {
+        "name": "Température d’arrêt"
+      },
+      "weather_lead_time": {
+        "name": "Temps d’anticipation"
+      },
+      "weather_refresh": {
+        "name": "Actualisation"
+      },
+      "weather_eco_mode": {
+        "name": "Mode éco"
+      },
+      "hot_water_target_temperature": {
+        "name": "ECS {index} température de consigne"
+      },
+      "hot_water_on_temperature": {
+        "name": "ECS {index} température d’enclenchement"
+      },
+      "hot_water_off_temperature": {
+        "name": "ECS {index} température d’arrêt"
+      },
+      "hot_water_pump": {
+        "name": "ECS {index} pompe"
+      },
+      "hot_water_state": {
+        "name": "ECS {index} état"
+      },
+      "hot_water_status": {
+        "name": "ECS {index} statut"
+      },
+      "hot_water_time_program": {
+        "name": "ECS {index} programme horaire"
+      },
+      "hot_water_sensor_on": {
+        "name": "ECS {index} sonde d’enclenchement"
+      },
+      "hot_water_sensor_off": {
+        "name": "ECS {index} sonde d’arrêt"
+      },
+      "hot_water_mode": {
+        "name": "ECS {index} mode"
+      },
+      "hot_water_heat_once": {
+        "name": "ECS {index} chauffe unique"
+      },
+      "hot_water_min_temperature": {
+        "name": "ECS {index} température minimale"
+      },
+      "hot_water_max_temperature": {
+        "name": "ECS {index} température maximale"
+      },
+      "hot_water_smart_start": {
+        "name": "ECS {index} démarrage intelligent"
+      },
+      "hot_water_use_boiler_heat": {
+        "name": "ECS {index} utilisation de la chaleur chaudière"
+      },
+      "hot_water_eco_mode": {
+        "name": "ECS {index} mode éco"
+      },
+      "solar_collector_temperature": {
+        "name": "Solaire {index} température capteur"
+      },
+      "solar_storage_temperature": {
+        "name": "Solaire {index} température ballon"
+      },
+      "solar_pump": {
+        "name": "Solaire {index} pompe"
+      },
+      "solar_state": {
+        "name": "Solaire {index} état"
+      },
+      "solar_status": {
+        "name": "Solaire {index} statut"
+      },
+      "solar_mode": {
+        "name": "Solaire {index} mode"
+      },
+      "solar_cooling": {
+        "name": "Solaire {index} refroidissement"
+      },
+      "solar_storage_max_temperature": {
+        "name": "Solaire {index} température maximale ballon"
+      }
+    },
+    "binary_sensor": {
+      "hot_water_pump": {
+        "name": "ECS {index} pompe"
+      },
+      "solar_pump": {
+        "name": "Solaire {index} pompe"
+      }
+    },
+    "number": {
+      "weather_cloud_limit": {
+        "name": "Limite de nébulosité"
+      },
+      "weather_hysteresis": {
+        "name": "Hystérésis"
+      },
+      "weather_off_temperature": {
+        "name": "Température d’arrêt"
+      },
+      "weather_lead_time": {
+        "name": "Temps d’anticipation"
+      },
+      "hot_water_target_temperature": {
+        "name": "ECS {index} température de consigne"
+      },
+      "hot_water_min_temperature": {
+        "name": "ECS {index} température minimale"
+      },
+      "hot_water_max_temperature": {
+        "name": "ECS {index} température maximale"
+      },
+      "solar_storage_max_temperature": {
+        "name": "Solaire {index} température maximale ballon"
+      }
+    },
     "select": {
       "heater": {
         "state": {
@@ -46,7 +217,7 @@
         "state": {
           "0_off": "0 - Arrêt",
           "1_auto": "1 - Auto",
-          "2_force": "2 - Marche forcée",
+          "2_force": "2 - Forcé",
           "2_hotwater": "2 - Eau chaude"
         }
       },
@@ -55,6 +226,27 @@
           "0_off": "0 - Arrêt",
           "1_on": "1 - Marche"
         }
+      },
+      "hot_water_mode": {
+        "name": "ECS {index} mode"
+      },
+      "hot_water_heat_once": {
+        "name": "ECS {index} chauffe unique"
+      },
+      "hot_water_sensor_on": {
+        "name": "ECS {index} sonde d’enclenchement"
+      },
+      "hot_water_sensor_off": {
+        "name": "ECS {index} sonde d’arrêt"
+      },
+      "hot_water_eco_mode": {
+        "name": "ECS {index} mode éco"
+      },
+      "solar_mode": {
+        "name": "Solaire {index} mode"
+      },
+      "solar_cooling": {
+        "name": "Solaire {index} refroidissement"
       }
     },
     "switch": {
