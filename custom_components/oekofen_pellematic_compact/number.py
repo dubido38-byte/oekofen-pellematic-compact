@@ -95,6 +95,9 @@ class PellematicNumber(NumberEntity):
         if translation_key:
             self._attr_has_entity_name = True
             self._attr_translation_key = translation_key
+            translation_placeholders = number_definition.get("translation_placeholders")
+            if translation_placeholders:
+                self._attr_translation_placeholders = translation_placeholders
         else:
             self._name = f"{self._platform_name} {number_definition['name']}"
         self._attr_unique_id = f"{self._platform_name.lower()}_{self._prefix}_{self._key}"
