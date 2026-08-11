@@ -104,6 +104,15 @@ def get_translation_key(component: str, key: str) -> Optional[str]:
     base_component = "".join(c for c in component if not c.isdigit())
     return ENTITY_TRANSLATION_KEYS.get((base_component, key.replace("#2", "")))
 
+def get_translation_placeholders(component: str, index: int) -> dict[str, str] | None:
+    """Return translation placeholders for numbered Ökofen components."""
+    base_component = "".join(c for c in component if not c.isdigit())
+
+    if base_component in ("ww", "sk") and index > 0:
+        return {"index": str(index)}
+
+    return None
+
 # Keys to ignore (metadata/info fields)
 IGNORE_KEYS = {
     "system_info",
@@ -523,6 +532,7 @@ def create_sensor_definition(
         "key": key,
         "name": name,
         "translation_key": get_translation_key(component, key),
+        "translation_placeholders": get_translation_placeholders(component, index),
         "unique_id": f"{component}_{key}",
         "unit": normalize_unit(data.get("unit")),
         "device_class": infer_device_class(data, key),
