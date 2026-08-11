@@ -184,6 +184,9 @@ class PellematicBinarySensor(BinarySensorEntity):
         if translation_key:     
             self._attr_has_entity_name = True     
             self._attr_translation_key = translation_key 
+            translation_placeholders = sensor_definition.get("translation_placeholders")
+            if translation_placeholders:
+                self._attr_translation_placeholders = translation_placeholders
         else:     
             # Fallback for unknown Ökofen API keys     
             self._name = f"{self._platform_name} {sensor_definition['name']}"
@@ -272,6 +275,9 @@ class PellematicSensor(SensorEntity):
         if translation_key:
             self._attr_has_entity_name = True
             self._attr_translation_key = translation_key
+            translation_placeholders = sensor_definition.get("translation_placeholders")
+            if translation_placeholders:
+                self._attr_translation_placeholders = translation_placeholders
         else:
             # Fallback for unknown Ökofen API keys
             self._name = f"{self._platform_name} {sensor_definition['name']}"
