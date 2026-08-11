@@ -202,7 +202,12 @@ class PellematicBinarySensor(BinarySensorEntity):
 
         _LOGGER.debug(
             "Adding dynamic PellematicBinarySensor: %s, %s",
-            getattr(self, "_name", self._attr_translation_key)
+            getattr(
+                self,
+                "_name",
+                getattr(self, "_attr_translation_key", None),
+            ),
+            self._attr_unique_id,
         )
 
     @property
@@ -227,13 +232,6 @@ class PellematicBinarySensor(BinarySensorEntity):
     @callback
     def _api_data_updated(self):
         self.async_write_ha_state()
-
-    @property
-    def name(self):
-        """Return the fallback name for untranslated entities."""
-        if hasattr(self, "_name"):
-            return self._name
-        return None
 
     @property
     def icon(self):
@@ -325,10 +323,17 @@ class PellematicSensor(SensorEntity):
             'l_az_cool', 'l_cop',
         ):
             self._attr_state_class = SensorStateClass.MEASUREMENT
-        
+            
         _LOGGER.debug(
             "Adding dynamic PellematicSensor: %s, %s, %s, %s",
-            self._name, self._attr_unique_id, self._unit_of_measurement, self._icon,
+            getattr(
+                self,
+                "_name",
+                getattr(self, "_attr_translation_key", None),
+            ),
+            self._attr_unique_id,
+            self._unit_of_measurement,
+            self._icon,
         )
 
     async def async_added_to_hass(self):
@@ -398,12 +403,6 @@ class PellematicSensor(SensorEntity):
     def _update_state(self):
         self._state = self._compute_state()
 
-    @property
-    def name(self):
-        """Return the fallback name for untranslated entities."""
-        if hasattr(self, "_name"):
-            return self._name
-        return None
 
     @property
     def unit_of_measurement(self):
