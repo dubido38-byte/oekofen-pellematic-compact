@@ -90,7 +90,13 @@ class PellematicNumber(NumberEntity):
         self._hub = hub
         self._prefix = number_definition['component']
         self._key = number_definition['key']
-        self._name = f"{self._platform_name} {number_definition['name']}"
+        translation_key = number_definition.get("translation_key")
+        
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        else:
+            self._name = f"{self._platform_name} {number_definition['name']}"
         self._attr_unique_id = f"{self._platform_name.lower()}_{self._prefix}_{self._key}"
         # Use component_key for entity_id instead of long human-readable name
         self._attr_object_id = f"{self._prefix}_{self._key}".lower()
@@ -115,7 +121,11 @@ class PellematicNumber(NumberEntity):
         
         _LOGGER.debug(
             "Adding dynamic PellematicNumber: %s, %s, min=%s, max=%s, step=%s, factor=%s",
-            self._name,
+           getattr(
+                self,
+                "_name",
+                getattr(self, "_attr_translation_key", None),
+),
             self._attr_unique_id,
             self._attr_native_min_value,
             self._attr_native_max_value,
@@ -207,11 +217,6 @@ class PellematicNumber(NumberEntity):
     def _update_state(self):
         self._attr_native_value = self._update_native_value()
         
-    @property
-    def name(self):
-        """Return the name."""
-        return f"{self._name}"
-
     @property
     def state(self) -> float | None:
         """Return the entity state."""
