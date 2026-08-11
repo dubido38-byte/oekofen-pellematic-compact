@@ -179,7 +179,15 @@ class PellematicBinarySensor(BinarySensorEntity):
         self._hub = hub
         self._prefix = sensor_definition['component']
         self._key = sensor_definition['key']
-        translation_key = sensor_definition.get("translation_key")  if translation_key:     self._attr_has_entity_name = True     self._attr_translation_key = translation_key else:     # Fallback for unknown Ökofen API keys     self._name = f"{self._platform_name} {sensor_definition['name']}"
+        
+        translation_key = sensor_definition.get("translation_key")  
+        if translation_key:     
+            self._attr_has_entity_name = True     
+            self._attr_translation_key = translation_key 
+        else:     
+            # Fallback for unknown Ökofen API keys     
+            self._name = f"{self._platform_name} {sensor_definition['name']}"
+            
         self._attr_unique_id = (
             f"{self._platform_name.lower()}_{self._prefix}_{self._key}"
         )
@@ -194,7 +202,7 @@ class PellematicBinarySensor(BinarySensorEntity):
 
         _LOGGER.debug(
             "Adding dynamic PellematicBinarySensor: %s, %s",
-            self._name, self._attr_unique_id,
+            getattr(self, "_name", self._attr_translation_key)
         )
 
     @property
@@ -222,8 +230,10 @@ class PellematicBinarySensor(BinarySensorEntity):
 
     @property
     def name(self):
-        """Return the name."""
-        return f"{self._name}"
+        """Return the fallback name for untranslated entities."""
+        if hasattr(self, "_name"):
+            return self._name
+        return None
 
     @property
     def icon(self):
