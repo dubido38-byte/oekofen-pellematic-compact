@@ -38,6 +38,72 @@ COMPONENT_NAMES = {
     "thirdparty": "Third Party Sensor",
 }
 
+
+# Home Assistant translation keys for known Ökofen API entities.
+#
+# Only known keys get a translation key. Unknown/new firmware keys keep using
+# the API-provided text (or the raw API key) as a fallback, preserving dynamic
+# discovery and forward compatibility.
+ENTITY_TRANSLATION_KEYS = {
+    # System
+    ("system", "L_ambient"): "system_ambient_temperature",
+    ("system", "L_errors"): "system_errors",
+    ("system", "L_usb_stick"): "system_usb_stick",
+    ("system", "L_boiler_temp"): "system_boiler_temperature",
+    ("system", "L_existing_boiler"): "system_existing_boiler",
+    ("system", "mode"): "system_mode",
+
+    # Weather
+    ("weather", "L_temp"): "weather_outside_temperature",
+    ("weather", "L_clouds"): "weather_cloudiness",
+    ("weather", "L_forecast_temp"): "weather_forecast_temperature",
+    ("weather", "L_forecast_clouds"): "weather_forecast_cloudiness",
+    ("weather", "L_forecast_today"): "weather_forecast_today",
+    ("weather", "L_starttime"): "weather_start_time",
+    ("weather", "L_endtime"): "weather_end_time",
+    ("weather", "L_source"): "weather_source",
+    ("weather", "L_location"): "weather_location",
+    ("weather", "cloud_limit"): "weather_cloud_limit",
+    ("weather", "hysteresys"): "weather_hysteresis",
+    ("weather", "offtemp"): "weather_off_temperature",
+    ("weather", "lead"): "weather_lead_time",
+    ("weather", "refresh"): "weather_refresh",
+    ("weather", "oekomode"): "weather_eco_mode",
+
+    # Domestic hot water
+    ("ww", "L_temp_set"): "hot_water_target_temperature",
+    ("ww", "L_ontemp_act"): "hot_water_on_temperature",
+    ("ww", "L_offtemp_act"): "hot_water_off_temperature",
+    ("ww", "L_pump"): "hot_water_pump",
+    ("ww", "L_state"): "hot_water_state",
+    ("ww", "L_statetext"): "hot_water_status",
+    ("ww", "time_prg"): "hot_water_time_program",
+    ("ww", "sensor_on"): "hot_water_sensor_on",
+    ("ww", "sensor_off"): "hot_water_sensor_off",
+    ("ww", "mode_auto"): "hot_water_mode",
+    ("ww", "heat_once"): "hot_water_heat_once",
+    ("ww", "temp_min_set"): "hot_water_min_temperature",
+    ("ww", "temp_max_set"): "hot_water_max_temperature",
+    ("ww", "smartstart"): "hot_water_smart_start",
+    ("ww", "use_boiler_heat"): "hot_water_use_boiler_heat",
+    ("ww", "oekomode"): "hot_water_eco_mode",
+
+    # Solar
+    ("sk", "L_koll_temp"): "solar_collector_temperature",
+    ("sk", "L_spu"): "solar_storage_temperature",
+    ("sk", "L_pump"): "solar_pump",
+    ("sk", "L_state"): "solar_state",
+    ("sk", "L_statetext"): "solar_status",
+    ("sk", "mode"): "solar_mode",
+    ("sk", "cooling"): "solar_cooling",
+    ("sk", "spu_max"): "solar_storage_max_temperature",
+}
+
+def get_translation_key(component: str, key: str) -> Optional[str]:
+    """Return a Home Assistant translation key for a known Ökofen entity."""
+    base_component = "".join(c for c in component if not c.isdigit())
+    return ENTITY_TRANSLATION_KEYS.get((base_component, key.replace("#2", "")))
+
 # Keys to ignore (metadata/info fields)
 IGNORE_KEYS = {
     "system_info",
@@ -456,6 +522,7 @@ def create_sensor_definition(
         "component": component,
         "key": key,
         "name": name,
+        "translation_key": get_translation_key(component, key),
         "unique_id": f"{component}_{key}",
         "unit": normalize_unit(data.get("unit")),
         "device_class": infer_device_class(data, key),
