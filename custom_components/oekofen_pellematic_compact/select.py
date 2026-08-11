@@ -97,6 +97,10 @@ class PellematicSelect(SelectEntity):
         if translation_key:
             self._attr_has_entity_name = True
             self._attr_translation_key = translation_key
+            
+            translation_placeholders = select_definition.get("translation_placeholders")
+            if translation_placeholders:
+                self._attr_translation_placeholders = translation_placeholders
         else:
             self._name = f"{self._platform_name} {select_definition['name']}"
             
